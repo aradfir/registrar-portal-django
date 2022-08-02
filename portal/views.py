@@ -34,7 +34,7 @@ def login_form(request):
                 login(request, user)
                 return HttpResponseRedirect(redirect_to=reverse_lazy('portal:index'))
             else:
-                return render(request,'portal/login.html',{'form':LoginForm(),'request':request,'invalid_prev_login':True})
+                return render(request,'portal/login.html',{'form':form,'request':request,'invalid_prev_login':True})
     else:
         form = LoginForm()
     return render(request, 'portal/login.html', {'form': form,'request':request})
