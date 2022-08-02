@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 
-class UserForm(forms.ModelForm):
+class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
 
@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'first_name', 'last_name', 'password')
 
     def clean(self):
-        cleaned_data = super(UserForm, self).clean()
+        cleaned_data = super(RegisterForm, self).clean()
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
 
