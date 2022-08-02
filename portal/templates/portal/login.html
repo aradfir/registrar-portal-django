@@ -1,14 +1,16 @@
 {% extends "portal/base.html" %}
 {% block content %}
-    {% if invalid_prev_login %}
-    <p>Invalid username/password combination!</p><br/><br/>
-    {% endif %}
-<form action="{% url 'portal:login' %}" method="post">
-    {% csrf_token %}
     <ul class="vertical">
-    {{ form.as_p }}
+        {% if invalid_prev_login %}
+            <p>Invalid username/password combination!</p><br/>
+        {% endif %}
+        <form action="{% url 'portal:login' %}" method="post">
+            {% csrf_token %}
 
-    <input type="submit" value="Submit">
-          </ul>
-</form>
+            {{ form.as_p }}
+
+            <input type="submit" value="Submit">
+
+        </form>
+    </ul>
 {% endblock %}
