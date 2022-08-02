@@ -11,21 +11,29 @@ class RegisterForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password')
 
+        error_messages = {
+            'username': {
+                "unique": "A user with that username already exists. CUSTOM!",
+
+            }
+        }
+
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
 
         if password != confirm_password:
-            self.add_error('confirm_password', "Password and Password Repeat do not match!")
+            self.add_error('confirm_password', "Password and Password Repeat do not match! CUSTOM" )
         return cleaned_data
 
     def save(self, commit=True):
-        super(RegisterForm,self).save(commit)
+        super(RegisterForm, self).save(commit)
         u = User.objects.get(username=self.cleaned_data.get('username'))
         u.set_password(self.cleaned_data.get('password'))
         u.save()
         return u
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150)
