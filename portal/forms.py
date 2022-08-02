@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 
 class RegisterForm(forms.ModelForm):
@@ -42,7 +42,7 @@ class LoginForm(forms.Form):
 
 
 class ContactForm(forms.Form):
-    title = forms.CharField(max_length=150)
+    form_title = forms.CharField(max_length=150,label="Title")
     email = forms.EmailField()
-    text = forms.CharField(widget=forms.Textarea, validators=[MinValueValidator(10, 'Message Too Short!'),
-                                                              MaxValueValidator(250, "Message Too Long!")])
+    text = forms.CharField(widget=forms.Textarea, validators=[MinLengthValidator(10, 'Message Too Short!'),
+                                                              MaxLengthValidator(250, "Message Too Long!")])

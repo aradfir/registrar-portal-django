@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+
+from django.apps import config
+from django.template.backends import django
 from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -120,3 +123,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = reverse_lazy('portal:login')
 LOGIN_REDIRECT_URL = reverse_lazy('portal:index')
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "aradfir@gmail.com"
+EMAIL_HOST_PASSWORD = "ENTER YOUR PASS"
+EMAIL_RECIPIENT=['aradfir@gmail.com']

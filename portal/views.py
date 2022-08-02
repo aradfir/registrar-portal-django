@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -46,11 +48,13 @@ def contact_us_form(request):
     if request.method == "POST":
         form = ContactForm(data=request.POST)
         if form.is_valid():
-            user = authenticate(request, username=form.cleaned_data.get('username'),
-                                password=form.cleaned_data.get('password'))
-            if user is not None:
-                login(request, user)
-                return render(request, 'portal/contact_success.html', {'request': request})
+            message = f"SENDER EMAIL:{form.cleaned_data.get('email')}\nSENDER TEXT:\n" \
+                      f"{form.cleaned_data.get('text')}"
+            subject = form.cleaned_data.get('form_title')
+            email_from = settings.EMAIL_HOST_USER
+
+            send_mail(subject, message, email_from, settings.EMAIL_RECIPIENT)
+            return render(request, 'portal/contact_success.html', {'request': request})
         else:
             return render(request, 'portal/contact_us.html',
                           {'form': form, 'request': request, 'invalid_prev_fill': True})
