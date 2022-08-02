@@ -43,6 +43,11 @@ def login_form(request):
     return render(request, 'portal/login.html', {'form': form, 'request': request})
 
 
+@login_required
+def profile_view(request):
+    return render(request, "portal/profile.html", {'request': request})
+
+
 @require_http_methods(['POST', 'GET'])
 def contact_us_form(request):
     if request.method == "POST":

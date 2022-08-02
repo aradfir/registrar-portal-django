@@ -170,13 +170,14 @@ ul.border li:last-child {
 </style>
 <ul id="navbar" class="horizontal">
     {% if request.user.is_authenticated %}
+        <li><a id="profile" href="{% url 'portal:profile' %}">Profile</a></li>
         <li><a id="logout" href="{% url 'portal:logout' %}">Logout</a></li>
     {% else %}
         <li><a id="login" href="{% url 'portal:login' %}">Login</a></li>
-        <li><a id="Register" href="{% url 'portal:register' %}">Register</a></li>
+        <li><a id="register" href="{% url 'portal:register' %}">Register</a></li>
 
     {% endif %}
-    <li><a id="Register" href="{% url 'portal:contactus' %}">Contact Us</a></li>
+    <li><a id="contactus" href="{% url 'portal:contactus' %}">Contact Us</a></li>
     <li style="float:right"><a id="homepage" href="{% url 'portal:index' %}">Homepage</a></li>
 </ul>
 <div id="content">
