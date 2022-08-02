@@ -1,9 +1,10 @@
 <div id="navbar">
-    {% if not request.user_is_authenticated %}
-    <a id="login" href="/">Login</a>
-    <a id="Register" href="{% url 'portal:register' %}">Register</a>
-    {% else %}
+    {% if request.user.is_authenticated %}
         <a id="logout" href="{% url 'portal:logout' %}">Logout</a>
+    {% else %}
+        <a id="login" href="{% url 'portal:login' %}">Login</a>
+        <a id="Register" href="{% url 'portal:register' %}">Register</a>
+
     {% endif %}
 
     <a id="homepage" href="{% url 'portal:index' %}">Homepage</a>

@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 
 class RegisterForm(forms.ModelForm):
@@ -17,3 +18,15 @@ class RegisterForm(forms.ModelForm):
 
         if password != confirm_password:
             self.add_error('confirm_password', "Password and Password Repeat do not match!")
+        return cleaned_data
+
+    def save(self, commit=True):
+        super(RegisterForm,self).save(commit)
+        u = User.objects.get(username=self.cleaned_data.get('username'))
+        u.set_password(self.cleaned_data.get('password'))
+        u.save()
+        return u
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=150)
+    password = forms.CharField(widget=forms.PasswordInput())

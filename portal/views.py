@@ -3,8 +3,12 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.models import User
 from .forms import RegisterForm
+from .forms import LoginForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -15,8 +19,25 @@ def index_view(request):
 
 @login_required
 def logout_view(request):
-    django.contrib.auth.logout(request)
-    return render(request, 'portal/logout.html')
+    logout(request)
+    return render(request, 'portal/logout.html',{'request':request})
+
+
+@require_http_methods(['POST', 'GET'])
+def login_form(request):
+    if request.method == "POST":
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data.get('username'),
+                                password=form.cleaned_data.get('password'))
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(redirect_to=reverse_lazy('portal:index'))
+            else:
+                return render(request,'portal/login.html',{'form':LoginForm(),'request':request,'invalid_prev_login':True})
+    else:
+        form = LoginForm()
+    return render(request, 'portal/login.html', {'form': form,'request':request})
 
 
 class Register(generic.CreateView):
