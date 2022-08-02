@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.models import User
 from .forms import RegisterForm
-from .forms import LoginForm
+from .forms import LoginForm, ContactForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -20,7 +20,7 @@ def index_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return render(request, 'portal/logout.html',{'request':request})
+    return render(request, 'portal/logout.html', {'request': request})
 
 
 @require_http_methods(['POST', 'GET'])
@@ -34,10 +34,29 @@ def login_form(request):
                 login(request, user)
                 return HttpResponseRedirect(redirect_to=reverse_lazy('portal:index'))
             else:
-                return render(request,'portal/login.html',{'form':form,'request':request,'invalid_prev_login':True})
+                return render(request, 'portal/login.html',
+                              {'form': form, 'request': request, 'invalid_prev_login': True})
     else:
         form = LoginForm()
-    return render(request, 'portal/login.html', {'form': form,'request':request})
+    return render(request, 'portal/login.html', {'form': form, 'request': request})
+
+
+@require_http_methods(['POST', 'GET'])
+def contact_us_form(request):
+    if request.method == "POST":
+        form = ContactForm(data=request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data.get('username'),
+                                password=form.cleaned_data.get('password'))
+            if user is not None:
+                login(request, user)
+                return render(request, 'portal/contact_success.html', {'request': request})
+        else:
+            return render(request, 'portal/contact_us.html',
+                          {'form': form, 'request': request, 'invalid_prev_fill': True})
+    else:
+        form = ContactForm()
+    return render(request, 'portal/contact_us.html', {'form': form, 'request': request})
 
 
 class Register(generic.CreateView):
