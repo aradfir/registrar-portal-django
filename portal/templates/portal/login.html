@@ -5,7 +5,10 @@
     {% endif %}
 <form action="{% url 'portal:login' %}" method="post">
     {% csrf_token %}
-    {{ form.as_ul }}
+    <ul class="vertical">
+    {{ form.as_p }}
+
     <input type="submit" value="Submit">
+          </ul>
 </form>
 {% endblock %}
