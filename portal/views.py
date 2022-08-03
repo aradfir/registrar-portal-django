@@ -86,7 +86,10 @@ class Register(generic.CreateView):
     success_url = reverse_lazy('portal:index')
 
 
-class CreateCourse(generic.CreateView):
+from .mixins import SuperUserRequiredMixin
+
+
+class CreateCourse(SuperUserRequiredMixin, generic.CreateView):
     template_name = 'portal/show_form.html'
     model = Course
     form_class = CourseCreateForm
@@ -95,3 +98,9 @@ class CreateCourse(generic.CreateView):
 
 def user_panel(request):
     return render(request, 'portal/panel.html')
+
+
+class UserPanelView(generic.ListView):
+    model = Course
+    template_name = 'portal/panel.html'
+    context_object_name = 'courses'

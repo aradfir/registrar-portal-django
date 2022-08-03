@@ -10,6 +10,6 @@ urlpatterns = [
     path('contactus/', contact_us_form, name='contactus'),
     path('profile/', profile_view, name='profile'),
     path('settings/', Settings.as_view(), name='settings'),
-    path('panel/', user_panel, name='panel'),
+    path('panel/', UserPanelView.as_view(), name='panel'),
     path('create_course/',CreateCourse.as_view(),name='create_course')
 ]

@@ -1,7 +1,23 @@
 {% extends "portal/base.html" %}
 {% block content %}
-    <ul class="vertical">
-        <li>Under Construction!</li>
+    <ul class="vertical" style="width: auto">
+        {% for course in courses %}
+            <ul id='course_{{ course.course_number }}_{{ course.group }}' class="horizontal2 gray">
+                <li><a>Department: {{ course.department }}</a></li>
+                <li><a>Course Name: {{ course.name }}</a></li>
+                <li><a>Course Number: {{ course.course_number }}</a></li>
+                <li><a>Group: {{ course.group }}</a></li>
+                <li><a>Professor: {{ course.professor_name }}</a></li>
+                <li><a>Start Time: {{ course.start_time }}</a></li>
+                <li><a>End Time: {{ course.end_time }}</a></li>
+                <li><a>Day 1: {{ course.get_day_1_display }}</a></li>
+                {% if course.day_2 %}
+                    <li><a>Day 2: {{ course.get_day_2_display }}</a></li>
+                {% endif %}
+
+            </ul>
+        {% endfor %}
+
         {% if request.user.is_superuser %}
             <li><a id="make_new_course_link" href="{% url 'portal:create_course' %}">Create Course</a></li>
         {% endif %}
