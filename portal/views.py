@@ -3,7 +3,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.models import User
-from .forms import LoginForm, ContactForm, RegisterForm, SettingsForm
+from .forms import LoginForm, ContactForm, RegisterForm, SettingsForm, CourseCreateForm
+from .models import Course
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -84,6 +85,12 @@ class Register(generic.CreateView):
     form_class = RegisterForm
     success_url = reverse_lazy('portal:index')
 
+
+class CreateCourse(generic.CreateView):
+    template_name = 'portal/show_form.html'
+    model = Course
+    form_class = CourseCreateForm
+    success_url = reverse_lazy('portal:panel')
 
 
 def user_panel(request):

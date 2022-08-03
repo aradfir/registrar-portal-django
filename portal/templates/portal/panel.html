@@ -3,7 +3,7 @@
     <ul class="vertical">
         <li>Under Construction!</li>
         {% if request.user.is_superuser %}
-            <li><a id="make_new_course">Create Course</a></li>
+            <li><a id="make_new_course_link" href="{% url 'portal:create_course' %}">Create Course</a></li>
         {% endif %}
     </ul>
 {% endblock %}

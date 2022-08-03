@@ -178,7 +178,7 @@
         <li><a id="profile" href="{% url 'portal:profile' %}">Profile</a></li>
         <li><a id="panel" href="{% url 'portal:panel' %}">Panel</a></li>
         {% if request.user.is_superuser %}
-            <li><a id="make_new_course">Create Course</a></li>
+            <li><a id="make_new_course" href="{% url 'portal:create_course' %}">Create Course</a></li>
         {% endif %}
         <li><a id="logout" href="{% url 'portal:logout' %}">Logout</a></li>
     {% else %}
