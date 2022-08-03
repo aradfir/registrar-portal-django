@@ -132,7 +132,7 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "aradfir@gmail.com"
-EMAIL_HOST_PASSWORD = "vztqetjrsxpfsqxt"
+EMAIL_HOST_PASSWORD = ""
 EMAIL_RECIPIENT = ['aradfir@gmail.com']
 TEMPLATE_CONTEXT_PROCESSORS = (
     'portal.context_processors.add_request_to_context',
