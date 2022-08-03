@@ -1,8 +1,10 @@
 {% extends "portal/base.html" %}
 {% block content %}
-<ul class="vertical">
-<li>  Username: {{ request.user.username }}</li>
-<li>  First Name: {{ request.user.first_name }}</li>
-<li>  Last Name: {{ request.user.last_name }}</li>
-</ul>
+    <ul class="vertical">
+        <li> Username: {{ request.user.username }}</li>
+        <li> First Name: {{ request.user.first_name }}</li>
+        <li> Last Name: {{ request.user.last_name }}</li>
+        <li><a href="{% url 'portal:settings' %}">>Incorrect data? Edit here.</a></li>
+
+    </ul>
 {% endblock %}
