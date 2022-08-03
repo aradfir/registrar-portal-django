@@ -10,6 +10,14 @@ class SettingsForm(forms.ModelForm):
         model = User
         fields = ('first_name', 'last_name')
 
+    def clean(self):
+        super(SettingsForm, self).clean()
+        if self.cleaned_data.get('last_name') == '':
+            self.cleaned_data.pop('last_name')
+        if self.cleaned_data.get('first_name') == '':
+            self.cleaned_data.pop('first_name')
+        return self.cleaned_data
+
 
 class CourseCreateForm(forms.ModelForm):
     # day_1 = forms.IntegerField(choices=Course.DAYS_OF_WEEK, required=True)
