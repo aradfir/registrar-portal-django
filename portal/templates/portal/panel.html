@@ -1,4 +1,9 @@
 {% extends "portal/base.html" %}
 {% block content %}
-    <ul class="vertical">Under Construction!</ul>
+    <ul class="vertical">
+        <li>Under Construction!</li>
+        {% if request.user.is_superuser %}
+            <li><a id="make_new_course">Create Course</a></li>
+        {% endif %}
+    </ul>
 {% endblock %}
