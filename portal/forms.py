@@ -4,6 +4,12 @@ from django.contrib.auth import authenticate
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 
+class SettingsForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
+
+
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
@@ -42,7 +48,8 @@ class LoginForm(forms.Form):
 
 
 class ContactForm(forms.Form):
-    form_title = forms.CharField(max_length=150,label="Title")
+    form_title = forms.CharField(max_length=150, label="Title")
     email = forms.EmailField()
     text = forms.CharField(widget=forms.Textarea, validators=[MinLengthValidator(10, 'Message Too Short!'),
                                                               MaxLengthValidator(250, "Message Too Long!")])
+

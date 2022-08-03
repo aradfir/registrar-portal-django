@@ -9,4 +9,5 @@ urlpatterns = [
     path('login/', login_form, name='login'),
     path('contactus/', contact_us_form, name='contactus'),
     path('profile/', profile_view, name='profile'),
+    path('settings/', Settings.as_view(), name='settings'),
 ]

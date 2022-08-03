@@ -1,9 +1,9 @@
 import django.contrib.auth
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.models import User
-from .forms import RegisterForm
-from .forms import LoginForm, ContactForm
+from .forms import LoginForm, ContactForm, RegisterForm, SettingsForm
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -68,8 +68,23 @@ def contact_us_form(request):
     return render(request, 'portal/contact_us.html', {'form': form, 'request': request})
 
 
+class Settings(LoginRequiredMixin,generic.edit.UpdateView):
+    template_name = 'portal/show_form.html'
+    model = User
+    form_class = SettingsForm
+    success_url = reverse_lazy('portal:profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super(Settings, self).get_context_data(**kwargs)
+        context['request'] = self.request
+        return context
+
+
 class Register(generic.CreateView):
-    template_name = 'portal/register.html'
+    template_name = 'portal/show_form.html'
     model = User
     form_class = RegisterForm
     success_url = reverse_lazy('portal:index')
