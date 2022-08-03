@@ -16,13 +16,13 @@ from django.conf import settings
 # Create your views here.
 
 def index_view(request):
-    return render(request, 'portal/index.html', {'request': request})
+    return render(request, 'portal/index.html')
 
 
 @login_required
 def logout_view(request):
     logout(request)
-    return render(request, 'portal/logout.html', {'request': request})
+    return render(request, 'portal/logout.html')
 
 
 @require_http_methods(['POST', 'GET'])
@@ -37,15 +37,15 @@ def login_form(request):
                 return HttpResponseRedirect(redirect_to=reverse_lazy('portal:index'))
             else:
                 return render(request, 'portal/login.html',
-                              {'form': form, 'request': request, 'invalid_prev_login': True})
+                              {'form': form, 'invalid_prev_login': True})
     else:
         form = LoginForm()
-    return render(request, 'portal/login.html', {'form': form, 'request': request})
+    return render(request, 'portal/login.html', {'form': form})
 
 
 @login_required
 def profile_view(request):
-    return render(request, "portal/profile.html", {'request': request})
+    return render(request, "portal/profile.html")
 
 
 @require_http_methods(['POST', 'GET'])
@@ -59,13 +59,13 @@ def contact_us_form(request):
             email_from = settings.EMAIL_HOST_USER
 
             send_mail(subject, message, email_from, settings.EMAIL_RECIPIENT)
-            return render(request, 'portal/contact_success.html', {'request': request})
+            return render(request, 'portal/contact_success.html')
         else:
             return render(request, 'portal/contact_us.html',
-                          {'form': form, 'request': request, 'invalid_prev_fill': True})
+                          {'form': form, 'invalid_prev_fill': True})
     else:
         form = ContactForm()
-    return render(request, 'portal/contact_us.html', {'form': form, 'request': request})
+    return render(request, 'portal/contact_us.html', {'form': form})
 
 
 class Settings(LoginRequiredMixin, generic.edit.UpdateView):
@@ -77,11 +77,6 @@ class Settings(LoginRequiredMixin, generic.edit.UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
-    def get_context_data(self, **kwargs):
-        context = super(Settings, self).get_context_data(**kwargs)
-        context['request'] = self.request
-        return context
-
 
 class Register(generic.CreateView):
     template_name = 'portal/show_form.html'
@@ -89,11 +84,7 @@ class Register(generic.CreateView):
     form_class = RegisterForm
     success_url = reverse_lazy('portal:index')
 
-    def get_context_data(self, **kwargs):
-        context = super(Register, self).get_context_data(**kwargs)
-        context['request'] = self.request
-        return context
 
 
 def user_panel(request):
-    return render(request, 'portal/panel.html', {'request': request})
+    return render(request, 'portal/panel.html')
