@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import Course
 from django.contrib.auth import authenticate
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
@@ -8,6 +9,14 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name')
+
+
+class CourseCreateForm(forms.ModelForm):
+    widgets = {'day_1': forms.ChoiceField, 'day_2': forms.ChoiceField}
+
+    class Meta:
+        model = Course
+        fields = '__all__'
 
 
 class RegisterForm(forms.ModelForm):
@@ -52,4 +61,3 @@ class ContactForm(forms.Form):
     email = forms.EmailField()
     text = forms.CharField(widget=forms.Textarea, validators=[MinLengthValidator(10, 'Message Too Short!'),
                                                               MaxLengthValidator(250, "Message Too Long!")])
-
