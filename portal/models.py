@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 
 # Create your models here.
@@ -11,20 +12,13 @@ class Course(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
 
-    DAYS_OF_WEEK_1 = (
+    DAYS_OF_WEEK = (
         (0, 'Saturday'),
         (1, 'Sunday'),
         (2, 'Monday'),
         (3, 'Tuesday'),
         (4, 'Wednesday'),
     )
-    DAYS_OF_WEEK_2 = (
-        (None, '-'),
-        (0, 'Saturday'),
-        (1, 'Sunday'),
-        (2, 'Monday'),
-        (3, 'Tuesday'),
-        (4, 'Wednesday'),
-    )
-    day_1 = models.IntegerField(choices=DAYS_OF_WEEK_1, null=False)
-    day_2 = models.IntegerField(choices=DAYS_OF_WEEK_2, null=True)
+    day_1 = models.IntegerField(choices=DAYS_OF_WEEK, null=False,)
+                                #validators=MinValueValidator(0, message="The first day cannot be empty!"))
+    day_2 = models.IntegerField(choices=DAYS_OF_WEEK, null=True,blank=True)

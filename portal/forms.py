@@ -12,7 +12,8 @@ class SettingsForm(forms.ModelForm):
 
 
 class CourseCreateForm(forms.ModelForm):
-    widgets = {'day_1': forms.ChoiceField, 'day_2': forms.ChoiceField}
+    # day_1 = forms.IntegerField(choices=Course.DAYS_OF_WEEK, required=True)
+    # day_2 = forms.IntegerField(required=False, choices=Course.DAYS_OF_WEEK)
 
     class Meta:
         model = Course
