@@ -68,7 +68,7 @@ def contact_us_form(request):
     return render(request, 'portal/contact_us.html', {'form': form, 'request': request})
 
 
-class Settings(LoginRequiredMixin,generic.edit.UpdateView):
+class Settings(LoginRequiredMixin, generic.edit.UpdateView):
     template_name = 'portal/show_form.html'
     model = User
     form_class = SettingsForm
@@ -93,3 +93,7 @@ class Register(generic.CreateView):
         context = super(Register, self).get_context_data(**kwargs)
         context['request'] = self.request
         return context
+
+
+def user_panel(request):
+    return render(request, 'portal/panel.html', {'request': request})
