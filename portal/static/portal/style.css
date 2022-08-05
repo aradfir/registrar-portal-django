@@ -37,6 +37,10 @@ ul {
     ul.horizontal li a.active {
         background-color: #04AA6D;
     }
+     a.active:hover {
+        background-color: dodgerblue;
+    }
+
 
     ul.horizontal2 {
         list-style-type: none;
@@ -102,7 +106,9 @@ ul {
         background-color: #04AA6D;
         color: white;
     }
-
+    ul.vertical a.active:hover {
+        color: #447e9b;
+    }
     ul.gray {
         border: 1px solid #e7e7e7;
         background-color: #f3f3f3;
@@ -120,7 +126,10 @@ ul {
         color : black;
         background-color: #ddd;
     }
-
+    ul.gray li a.active:hover{
+        color : white;
+        background-color: #447e9b;
+    }
     ul.gray li a.active {
         color: black;
 

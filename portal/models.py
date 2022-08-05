@@ -1,3 +1,4 @@
+import django.contrib.auth.models
 from django.db import models
 from django.core.validators import MinValueValidator
 
@@ -19,6 +20,7 @@ class Course(models.Model):
         (3, 'Tuesday'),
         (4, 'Wednesday'),
     )
-    day_1 = models.IntegerField(choices=DAYS_OF_WEEK, null=False,)
-                                #validators=MinValueValidator(0, message="The first day cannot be empty!"))
-    day_2 = models.IntegerField(choices=DAYS_OF_WEEK, null=True,blank=True)
+    day_1 = models.IntegerField(choices=DAYS_OF_WEEK, null=False, )
+    # validators=MinValueValidator(0, message="The first day cannot be empty!"))
+    day_2 = models.IntegerField(choices=DAYS_OF_WEEK, null=True, blank=True)
+    users = models.ManyToManyField(django.contrib.auth.models.User)

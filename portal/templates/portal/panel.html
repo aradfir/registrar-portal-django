@@ -14,12 +14,73 @@
                 {% if course.day_2 %}
                     <li><a>Day 2: {{ course.get_day_2_display }}</a></li>
                 {% endif %}
+                {% if selection_active %}
+                    <li>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="c_id" value="{{ course.course_number }}"/>
+                            <input type="hidden" name="c_group" value="{{ course.group }}"/>
+                            <a href="#" onclick="event.preventDefault(); this.parentNode.submit()" class="active">Register</a>
 
+                        </form>
+
+                    </li>
+                {% endif %}
             </ul>
         {% endfor %}
+        <li>My Courses</li>
+        <ul class="vertical2">
+            {% for course in my_courses %}
+                <ul id='course_{{ course.course_number }}_{{ course.group }}' class="horizontal2 gray">
+                    <li><a>Department: {{ course.department }}</a></li>
+                    <li><a>Course Name: {{ course.name }}</a></li>
+                    <li><a>Course Number: {{ course.course_number }}</a></li>
+                    <li><a>Group: {{ course.group }}</a></li>
+                    <li><a>Professor: {{ course.professor_name }}</a></li>
+                    <li><a>Start Time: {{ course.start_time }}</a></li>
+                    <li><a>End Time: {{ course.end_time }}</a></li>
+                    <li><a>Day 1: {{ course.get_day_1_display }}</a></li>
+                    {% if course.day_2 %}
+                        <li><a>Day 2: {{ course.get_day_2_display }}</a></li>
+                    {% endif %}
+                    {% if selection_active %}
+                        <li>
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="c_id_drop" value="{{ course.course_number }}"/>
+                                <input type="hidden" name="c_group_drop" value="{{ course.group }}"/>
+                                <a href="#" onclick="event.preventDefault(); this.parentNode.submit()" class="active">Drop</a>
 
+                            </form>
+
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endfor %}
+        </ul>
         {% if request.user.is_superuser %}
             <li><a id="make_new_course_link" href="{% url 'portal:create_course' %}">Create Course</a></li>
+            {% if selection_active %}
+                <li>
+                    <form action="{% url 'portal:panel' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="registeration" value="0"/>
+                        <a id="stop_course_select" href="#" onclick="event.preventDefault(); this.parentNode.submit()">End
+                            Registeration</a>
+                    </form>
+                </li>
+            {% else %}
+                <li>
+                    <form action="{% url 'portal:panel' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="registeration" value="1"/>
+                        <a id="start_course_select" href="#" onclick="event.preventDefault(); this.parentNode.submit()">Start
+                            Registeration</a>
+                    </form>
+                </li>
+            {% endif %}
+
+
         {% endif %}
     </ul>
 {% endblock %}

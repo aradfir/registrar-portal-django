@@ -104,3 +104,36 @@ class UserPanelView(generic.ListView):
     model = Course
     template_name = 'portal/panel.html'
     context_object_name = 'courses'
+
+
+register_active = False
+
+
+@require_http_methods(['GET', 'POST'])
+@login_required
+def userpanel_view(request):
+    global register_active
+    if request.method == "POST":
+        if request.POST.get('registeration', '') == '1':
+            register_active = True
+        elif request.POST.get('registeration', '') == '0':
+            register_active = False
+        course_id = request.POST.get('c_id', '')
+        course_group = request.POST.get('c_group', '')
+        if course_id != '' and course_group != '':
+            course = Course.objects.filter(course_number=course_id, group=course_group).first()
+            if course is not None:
+                course.users.add(request.user)
+                course.save()
+        course_id = request.POST.get('c_id_drop', '')
+        course_group = request.POST.get('c_group_drop', '')
+        if course_id != '' and course_group != '':
+            course = Course.objects.filter(course_number=course_id, group=course_group).first()
+            if course is not None:
+                course.users.remove(request.user)
+                course.save()
+    my_course = Course.objects.filter(users__username=request.user.get_username())
+    courses = Course.objects.exclude(course_number__in=my_course.values_list('course_number', flat=True))
+
+    return render(request, 'portal/panel.html', {'courses': courses, 'selection_active': register_active,
+                                                 'my_courses': my_course})
