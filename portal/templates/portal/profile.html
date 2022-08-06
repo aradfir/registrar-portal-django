@@ -1,13 +1,14 @@
 {% extends "portal/base.html" %}
 {% block content %}
-    <ul class="vertical">
-        <li><img src={{ request.user.avatar.url }}/></li>
-        <li>{{ request.user.avatar.url }}</li>
+    <ul class="vertical" style="width: auto">
+        <li><img src="{{ request.user.avatar.url }}" style="height: 300px" /></li>
         <li> Username: {{ request.user.username }}</li>
         <li> First Name: {{ request.user.first_name }}</li>
         <li> Last Name: {{ request.user.last_name }}</li>
+        <li> Gender: {{ request.user.get_gender_display }}</li>
+        <li>Biography: <br/>&emsp;&emsp;{{ request.user.bio }}</li>
         <li><a href="{% url 'portal:settings' %}">>Incorrect data? Edit here.</a></li>
-        <li>{{ request.user.bio }}</li>
+
 
     </ul>
 {% endblock %}

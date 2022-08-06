@@ -9,7 +9,7 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 class SettingsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('avatar','first_name', 'last_name','bio')
+        fields = ('avatar','first_name', 'last_name','gender','bio')
 
     def clean(self):
         super(SettingsForm, self).clean()

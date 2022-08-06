@@ -6,7 +6,13 @@ from django.contrib.auth.models import AbstractUser
 
 class UserProfile(AbstractUser):
     bio = models.CharField(max_length=150, blank=True, null=True)
-    avatar = models.ImageField(upload_to='avatars/',default='static/portal/default_avatar.jpg', )
+    avatar = models.ImageField(upload_to='avatars/', default='static/portal/default_avatar.jpg')
+    POSSIBLE_GENDER = (
+        (None, 'Would rather not specify'),
+        (1, 'Male'),
+        (2, 'Female')
+    )
+    gender = models.IntegerField(choices=POSSIBLE_GENDER, null=True, blank=True)
 
 
 # Create your models here.
