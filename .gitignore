@@ -1,2 +1,3 @@
-portal/media/.
-static/*
+/portal/media/
+/static/
+

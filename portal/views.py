@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.models import User
 from .forms import LoginForm, ContactForm, RegisterForm, SettingsForm, CourseCreateForm
-from .models import Course
+from .models import Course, UserProfile
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -71,8 +71,9 @@ def contact_us_form(request):
 
 class Settings(LoginRequiredMixin, generic.edit.UpdateView):
     template_name = 'portal/show_form.html'
-    model = User
+    model = UserProfile
     form_class = SettingsForm
+
     success_url = reverse_lazy('portal:profile')
 
     def get_object(self, queryset=None):
@@ -81,7 +82,7 @@ class Settings(LoginRequiredMixin, generic.edit.UpdateView):
 
 class Register(generic.CreateView):
     template_name = 'portal/show_form.html'
-    model = User
+    model = UserProfile
     form_class = RegisterForm
     success_url = reverse_lazy('portal:index')
 

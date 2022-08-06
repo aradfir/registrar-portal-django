@@ -1,9 +1,10 @@
 {% extends "portal/base.html" %}
 {% block content %}
-<form method="post">{% csrf_token %}
-    <ul class="vertical">
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-    </ul>
-</form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <ul class="vertical">
+            {{ form.as_p }}
+            <input type="submit" value="Save">
+        </ul>
+    </form>
 {% endblock %}

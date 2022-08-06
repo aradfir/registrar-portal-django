@@ -1,14 +1,15 @@
 from django import forms
-from django.contrib.auth.models import User
-from .models import Course
+# from django.contrib.auth.models import User
+
+from .models import Course, UserProfile
 from django.contrib.auth import authenticate
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 
 class SettingsForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('first_name', 'last_name')
+        model = UserProfile
+        fields = ('avatar','first_name', 'last_name','bio')
 
     def clean(self):
         super(SettingsForm, self).clean()
@@ -33,7 +34,7 @@ class RegisterForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
-        model = User
+        model = UserProfile
         fields = ('username', 'email', 'first_name', 'last_name', 'password')
 
         error_messages = {
@@ -54,7 +55,7 @@ class RegisterForm(forms.ModelForm):
 
     def save(self, commit=True):
         super(RegisterForm, self).save(commit)
-        u = User.objects.get(username=self.cleaned_data.get('username'))
+        u = UserProfile.objects.get(username=self.cleaned_data.get('username'))
         u.set_password(self.cleaned_data.get('password'))
         u.save()
         return u

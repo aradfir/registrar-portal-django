@@ -137,3 +137,6 @@ EMAIL_RECIPIENT = ['aradfir@gmail.com']
 TEMPLATE_CONTEXT_PROCESSORS = (
     'portal.context_processors.add_request_to_context',
 )
+AUTH_USER_MODEL = 'portal.UserProfile'
+MEDIA_ROOT = 'portal/media'
+MEDIA_URL='media/'
