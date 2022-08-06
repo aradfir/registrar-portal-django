@@ -6,7 +6,7 @@
         <li> First Name: {{ request.user.first_name }}</li>
         <li> Last Name: {{ request.user.last_name }}</li>
         <li> Gender: {{ request.user.get_gender_display }}</li>
-        <li>Biography: <br/>&emsp;&emsp;{{ request.user.bio }}</li>
+        <li>Biography: <br/>&emsp;&emsp;{{ request.user.bio | safe }}</li>
         <li><a href="{% url 'portal:settings' %}">>Incorrect data? Edit here.</a></li>
 
 
