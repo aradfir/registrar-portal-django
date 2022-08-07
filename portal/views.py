@@ -1,6 +1,6 @@
 import django.contrib.auth
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import generic
 from django.contrib.auth.models import User
 from .forms import LoginForm, ContactForm, RegisterForm, SettingsForm, CourseCreateForm
@@ -97,17 +97,30 @@ class CreateCourse(SuperUserRequiredMixin, generic.CreateView):
     success_url = reverse_lazy('portal:panel')
 
 
-def user_panel(request):
-    return render(request, 'portal/panel.html')
-
-
-class UserPanelView(generic.ListView):
-    model = Course
-    template_name = 'portal/panel.html'
-    context_object_name = 'courses'
-
+# def user_panel(request):
+#     return render(request, 'portal/panel.html')
+#
+#
+# class UserPanelView(LoginRequiredMixin,generic.ListView):
+#     model = Course
+#     template_name = 'portal/panel.html'
+#     context_object_name = 'courses'
+#
 
 register_active = False
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def delete_account_view(request):
+    if request.method == 'POST':
+        current_user = request.user
+        logout(request)
+        current_user.delete()
+        return redirect('portal:index')
+    else:
+        return render(request,'portal/delete_confirm.html')
+
 
 
 @require_http_methods(['GET', 'POST'])

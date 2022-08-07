@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile/', profile_view, name='profile'),
     path('settings/', Settings.as_view(), name='settings'),
     path('panel/', userpanel_view, name='panel'),
-    path('create_course/',CreateCourse.as_view(),name='create_course')
+    path('create_course/',CreateCourse.as_view(),name='create_course'),
+    path('delete/',delete_account_view,name='delete_account')
 ]

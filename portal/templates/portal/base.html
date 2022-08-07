@@ -4,6 +4,7 @@
     {% if request.user.is_authenticated %}
         <li><a id="profile" href="{% url 'portal:profile' %}">Profile</a></li>
         <li><a id="panel" href="{% url 'portal:panel' %}">Panel</a></li>
+        <li><a id="del" href="{% url 'portal:delete_account' %}">Delete Account</a></li>
         {% if request.user.is_superuser %}
             <li><a id="make_new_course" href="{% url 'portal:create_course' %}">Create Course</a></li>
         {% endif %}
