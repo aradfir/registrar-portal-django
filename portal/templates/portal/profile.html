@@ -6,6 +6,11 @@
         <li> First Name: {{ request.user.first_name }}</li>
         <li> Last Name: {{ request.user.last_name }}</li>
         <li> Gender: {{ request.user.get_gender_display }}</li>
+        <li>Roles:</li>
+            {% for g in request.user.groups.all %}
+                <li>&emsp;{{ g.name }}</li>
+            {% endfor %}
+
         <li>Biography: <br/>&emsp;&emsp;{{ request.user.bio | safe }}</li>
         <li><a href="{% url 'portal:settings' %}">>Incorrect data? Edit here.</a></li>
 

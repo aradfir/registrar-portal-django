@@ -4,12 +4,16 @@ from django import forms
 from .models import Course, UserProfile
 from django.contrib.auth import authenticate
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.contrib.auth.models import Group
+
+prof_group, created = Group.objects.get_or_create(name='Professor')
+std_group, created = Group.objects.get_or_create(name='Student')
 
 
 class SettingsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('avatar','first_name', 'last_name','gender','bio')
+        fields = ('avatar', 'first_name', 'last_name', 'gender', 'bio')
 
     def clean(self):
         super(SettingsForm, self).clean()
@@ -32,6 +36,7 @@ class CourseCreateForm(forms.ModelForm):
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
+    account_type = forms.ChoiceField(choices=((prof_group.id, 'Professor'), (std_group.id, 'Student')))
 
     class Meta:
         model = UserProfile
@@ -58,6 +63,8 @@ class RegisterForm(forms.ModelForm):
         u = UserProfile.objects.get(username=self.cleaned_data.get('username'))
         u.set_password(self.cleaned_data.get('password'))
         u.save()
+        u.groups.add(self.cleaned_data.get('account_type'))
+        print(u.groups.get())
         return u
 
 
